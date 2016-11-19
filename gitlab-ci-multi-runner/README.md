@@ -56,9 +56,3 @@ sudo docker commit -m "Register gitlab-ci-multi-runner" 3771858d86bd myrepo/gitl
 
 下次就可以直接启动它了。
 
----
-
-如果遇到android-sdk里的命令无法执行，那你需要安装32位的动态链接库。具体操作方法是启动docker之后，执行以下命令，然后commit。
-```shell
-RUN apt install -y libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1
-```
