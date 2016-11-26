@@ -1,6 +1,8 @@
 FROM ubuntu:15.04
 
-MAINTAINER HuangHaohang <huanghaohang@parkingwang.com>
+MAINTAINER HuangHaohang <msdx.android@qq.com>
+
+ENV ANDROID_HOME /android-sdk
 
 RUN apt update && apt install -y openjdk-8-jdk curl
 
@@ -11,10 +13,11 @@ RUN curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-mu
 
 RUN apt-get install -y gitlab-ci-multi-runner
 
-RUN echo "zh_CN.UTF-8 UTF-8" > /var/lib/locales/supported.d/local \
-  && echo "en_US.UTF-8 UTF-8" >> /var/lib/locales/supported.d/local \
-  && dpkg-reconfigure locales \
-  && export LC_ALL=zh_CN.UTF-8 \
-  && export LANG=zh_CN.UTF-8
-
-
+# Ensure UTF-8 locale
+#COPY locale /etc/default/locale
+RUN locale-gen zh_CN.UTF-8 && \
+  DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+RUN locale-gen zh_CN.UTF-8 
+ENV LANG zh_CN.UTF-8 
+ENV LANGUAGE zh_CN:zh 
+ENV LC_ALL zh_CN.UTF-8
